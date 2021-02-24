@@ -37,4 +37,8 @@ def products(request):
              'short_description': 'Легкая эластичная ткань сирсакер Фактурная ткань.', 'price': 2890},
         ]
     }
+    with open("mainapp/fixtures/products.json", "r") as file:
+        dict_data = json.load(file)
+    for product in dict_data:
+        content['products'].append(dict_data[product])
     return render(request, 'mainapp/products.html', context=content)
