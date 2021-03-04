@@ -1,20 +1,35 @@
-{
-	"product_1": {
-		"name": "Худи черного цвета с монограммами adidas Originals",
-		"short_description": "Мягкая ткань для свитшотов. Стиль и комфорт – это образ жизни.",
-		"price": 6090,
-		"img": "/vendor/img/products/Adidas-hoodie.png"
+[
+	{
+		"model": "mainapp.product",
+		"pk": 1,
+		"fields": {
+			"name": "Худи черного цвета с монограммами adidas Originals",
+			"short_description": "Мягкая ткань для свитшотов. Стиль и комфорт – это образ жизни.",
+			"price": 6090,
+			"category": 1,
+			"image": "products_images/Adidas-hoodie.png"
+		}
 	},
-	"product_2": {
-		"name": "Синяя куртка The North Face",
-		"short_description": "Гладкая ткань. Водонепроницаемое покрытие. Легкий и теплый пуховый наполнитель.",
-		"price": 23725,
-		"img": "/vendor/img/products/Blue-jacket-The-North-Face.png"
+	{
+		"model": "mainapp.product",
+		"pk": 2,
+		"fields": {
+			"name": "Синяя куртка The North Face",
+			"short_description": "Гладкая ткань. Водонепроницаемое покрытие. Легкий и теплый пуховый наполнитель.",
+			"price": 23725,
+			"category": 1,
+			"image": "products_images/Blue-jacket-The-North-Face.png"
+		}
 	},
-	"product_3": {
-		"name": "Коричневый спортивный oversized-топ ASOS DESIGN",
-		"short_description": "Материал с плюшевой текстурой. Удобный и мягкий.",
-		"price": 3390,
-		"img": "/vendor/img/products/Brown-sports-oversized-top-ASOS-DESIGN.png"
+	{
+		"model": "mainapp.product",
+		"pk": 3,
+		"fields": {
+			"name": "Коричневый спортивный oversized-топ ASOS DESIGN",
+			"short_description": "Материал с плюшевой текстурой. Удобный и мягкий.",
+			"price": 3390,
+			"category": 1,
+			"image": "products_images/Brown-sports-oversized-top-ASOS-DESIGN.png"
+		}
 	}
-}
+]
