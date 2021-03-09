@@ -33,5 +33,8 @@ class ShopUserRegisterForm(UserCreationForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'Подтвердите пароль'
 
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
+            if field_name == 'avatar':
+                field.widget.attrs['class'] = 'form-control-file py-4'
+            else:
+                field.widget.attrs['class'] = 'form-control py-4'
             field.help_text = ''
