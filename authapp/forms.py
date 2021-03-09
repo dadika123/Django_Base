@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from authapp.models import ShopUser
 
 
@@ -38,3 +38,21 @@ class ShopUserRegisterForm(UserCreationForm):
             else:
                 field.widget.attrs['class'] = 'form-control py-4'
             field.help_text = ''
+
+
+class ShopUserProfileForm(UserChangeForm):
+    class Meta:
+        model = ShopUser
+        fields = ('username', 'first_name', 'last_name', 'age', 'email',
+                  'avatar',)
+
+    def __init__(self, *args, **kwargs):
+        super(UserChangeForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs['readonly'] = True
+        self.fields['username'].widget.attrs['readonly'] = True
+        for field_name, field in self.fields.items():
+            if field_name == 'avatar':
+                field.widget.attrs['class'] = 'form-control-file py-4'
+            else:
+                field.widget.attrs['class'] = 'form-control py-4'
+                field.help_text = ''
