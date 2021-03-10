@@ -52,7 +52,7 @@ class ShopUserProfileForm(UserChangeForm):
         self.fields['username'].widget.attrs['readonly'] = True
         for field_name, field in self.fields.items():
             if field_name == 'avatar':
-                field.widget.attrs['class'] = 'form-control-file py-4'
+                field.widget.attrs['class'] = 'custom-file-input'
             else:
                 field.widget.attrs['class'] = 'form-control py-4'
                 field.help_text = ''
