@@ -53,6 +53,8 @@ class ShopUserProfileForm(UserChangeForm):
         for field_name, field in self.fields.items():
             if field_name == 'avatar':
                 field.widget.attrs['class'] = 'custom-file-input'
+                field.widget.attrs['type'] = 'file'
+                field.widget.attrs['size'] = '50'
             else:
                 field.widget.attrs['class'] = 'form-control py-4'
                 field.help_text = ''
