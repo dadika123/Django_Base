@@ -1,3 +1,4 @@
+from basketapp.models import Basket
 from django.shortcuts import render, HttpResponseRedirect
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserProfileForm
 from django.contrib import auth, messages
@@ -55,6 +56,7 @@ def profile(request):
             return HttpResponseRedirect(reverse('auth:profile'))
     else:
         profile_form = ShopUserProfileForm(instance=request.user)
-        content = {'title': title, 'profile_form': profile_form,
+        basket = Basket.objects.all()
+        content = {'title': title, 'profile_form': profile_form, 'basket': basket,
                    'media_url': settings.MEDIA_URL}
         return render(request, 'authapp/profile.html', content)
