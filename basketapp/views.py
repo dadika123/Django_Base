@@ -1,8 +1,13 @@
 from mainapp.views import products
-from django.shortcuts import HttpResponseRedirect
+from django.shortcuts import HttpResponseRedirect, render
 from mainapp.models import Product
 from basketapp.models import Basket
 from django.urls import reverse
+
+
+def basket(request):
+    content = {}
+    return render(request, 'basketapp/basket.html', content)
 
 
 def basket_add(request, product_id=None):
@@ -19,3 +24,7 @@ def basket_add(request, product_id=None):
         basket.quantity += 1
         basket.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def basket_remove(request, product_id=None):
+    content={}
+    return render(request, 'basketapp/basket.html', content)
