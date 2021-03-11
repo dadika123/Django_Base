@@ -10,7 +10,7 @@ class Basket(models.Model):
     user = models.ForeignKey(ShopUser, on_delete=CASCADE)
     product = models.ForeignKey(Product, on_delete=CASCADE)
     quantity = models.PositiveIntegerField(default=0)
-    created_timestamp = models.DateTimeField(auto_created=True)
+    created_timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Корзина пользователя: {self.user.username} | Товар: {self.product.name}"

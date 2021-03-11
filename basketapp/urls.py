@@ -1,8 +1,10 @@
 from django.urls import path
-from basketapp.views import basket_add
 
-app_name = 'basketapp'
+from basketapp import views as basketapp
+
+app_name = "basketapp"
 
 urlpatterns = [
-    path(),
+    path('basket-add/<int:product_id>/',
+         basketapp.basket_add, name='basket_add'),
 ]
