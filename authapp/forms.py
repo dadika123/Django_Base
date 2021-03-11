@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from authapp.models import ShopUser
+from django import forms
 
 
 class ShopUserLoginForm(AuthenticationForm):
@@ -41,6 +42,8 @@ class ShopUserRegisterForm(UserCreationForm):
 
 
 class ShopUserProfileForm(UserChangeForm):
+    avatar = forms.ImageField(widget=forms.FileInput())
+
     class Meta:
         model = ShopUser
         fields = ('username', 'first_name', 'last_name', 'age', 'email',
@@ -48,13 +51,8 @@ class ShopUserProfileForm(UserChangeForm):
 
     def __init__(self, *args, **kwargs):
         super(UserChangeForm, self).__init__(*args, **kwargs)
-        self.fields['email'].widget.attrs['readonly'] = True
-        self.fields['username'].widget.attrs['readonly'] = True
         for field_name, field in self.fields.items():
-            if field_name == 'avatar':
-                field.widget.attrs['class'] = 'custom-file-input'
-                field.widget.attrs['type'] = 'file'
-                field.widget.attrs['size'] = '50'
-            else:
-                field.widget.attrs['class'] = 'form-control py-4'
-                field.help_text = ''
+            field.widget.attrs['class'] = 'form-control py-4'
+        self.fields['username'].widget.attrs['readonly'] = True
+        self.fields['email'].widget.attrs['readonly'] = True
+        self.fields['avatar'].widget.attrs['class'] = 'custom-file-input'

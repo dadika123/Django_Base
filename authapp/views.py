@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserProfileForm
 from django.contrib import auth, messages
 from django.urls import reverse
+from django.conf import settings
 
 
 def login(request):
@@ -54,5 +55,6 @@ def profile(request):
             return HttpResponseRedirect(reverse('auth:profile'))
     else:
         profile_form = ShopUserProfileForm(instance=request.user)
-        content = {'title': title, 'profile_form': profile_form}
+        content = {'title': title, 'profile_form': profile_form,
+                   'media_url': settings.MEDIA_URL}
         return render(request, 'authapp/profile.html', content)
