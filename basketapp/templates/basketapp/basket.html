@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-lg-4">{{ product.product.price }}</div>
                     <div class="col-lg-4">
-                        <a href="#">
+                        <a href="{% url 'basket:remove' product.id %}">
                             <i class="fas fa-trash"></i>
                         </a>
                     </div>

@@ -3,6 +3,7 @@ from django.db.models.deletion import CASCADE
 from authapp.models import ShopUser
 from mainapp.models import Product
 
+
 # Create your models here.
 
 
