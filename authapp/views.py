@@ -33,7 +33,7 @@ def logout(request):
 
 
 def register(request):
-    title = 'регистрация'
+    title = 'Регистрация'
 
     if request.method == "POST":
         register_form = ShopUserRegisterForm(request.POST, request.FILES)
@@ -57,6 +57,11 @@ def profile(request):
     else:
         profile_form = ShopUserProfileForm(instance=request.user)
         basket = Basket.objects.all()
-        content = {'title': title, 'profile_form': profile_form, 'basket': basket,
+        total_quantity = 0
+        total_sum = 0
+        for product in basket:
+            total_quantity += product.quantity
+            total_sum += product.sum()
+        content = {'title': title, 'profile_form': profile_form, 'basket': basket, 'total_sum': total_sum, 'total_quantity': total_quantity,
                    'media_url': settings.MEDIA_URL}
         return render(request, 'authapp/profile.html', content)
