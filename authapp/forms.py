@@ -1,5 +1,6 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from authapp.models import ShopUser
+from django import forms
 
 
 class ShopUserLoginForm(AuthenticationForm):
@@ -33,5 +34,25 @@ class ShopUserRegisterForm(UserCreationForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'Подтвердите пароль'
 
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
+            if field_name == 'avatar':
+                field.widget.attrs['class'] = 'form-control-file py-4'
+            else:
+                field.widget.attrs['class'] = 'form-control py-4'
             field.help_text = ''
+
+
+class ShopUserProfileForm(UserChangeForm):
+    avatar = forms.ImageField(widget=forms.FileInput())
+
+    class Meta:
+        model = ShopUser
+        fields = ('username', 'first_name', 'last_name', 'age', 'email',
+                  'avatar',)
+
+    def __init__(self, *args, **kwargs):
+        super(UserChangeForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control py-4'
+        self.fields['username'].widget.attrs['readonly'] = True
+        self.fields['email'].widget.attrs['readonly'] = True
+        self.fields['avatar'].widget.attrs['class'] = 'custom-file-input'
