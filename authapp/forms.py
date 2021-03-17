@@ -1,6 +1,7 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
-from authapp.models import ShopUser
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+
+from authapp.models import ShopUser
 
 
 class ShopUserLoginForm(AuthenticationForm):
@@ -51,8 +52,10 @@ class ShopUserProfileForm(UserChangeForm):
 
     def __init__(self, *args, **kwargs):
         super(UserChangeForm, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
         self.fields['username'].widget.attrs['readonly'] = True
         self.fields['email'].widget.attrs['readonly'] = True
-        self.fields['avatar'].widget.attrs['class'] = 'custom-file-input'
+        for field_name, field in self.fields.items():
+            if field_name == 'avatar':
+                field.widget.attrs['class'] = 'custom-file-input'
+            else:
+                field.widget.attrs['class'] = 'form-control py-4'

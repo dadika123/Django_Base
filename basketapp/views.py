@@ -1,8 +1,7 @@
-from mainapp.views import products
 from django.shortcuts import HttpResponseRedirect, render
-from mainapp.models import Product
+
 from basketapp.models import Basket
-from django.urls import reverse
+from mainapp.models import Product
 
 
 def basket(request):
