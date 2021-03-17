@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
+
 from authapp.models import ShopUser
 from mainapp.models import Product
 
@@ -20,9 +21,10 @@ class Basket(models.Model):
         return self.quantity * self.product.price
 
     def total_quantity(self):
-        basket_products = Basket.objects.filter(user=self.user)
-        return sum(basket_product.quantity for basket_product in basket_products)
+        user_products = Basket.objects.filter(user=self.user)
+        return sum(
+            user_product.quantity for user_product in user_products)
 
     def total_sum(self):
-        basket_products = Basket.objects.filter(user=self.user)
-        return sum(basket_products.sum() for basket_product in basket_products)
+        user_products = Basket.objects.filter(user=self.user)
+        return sum(user_product.sum() for user_product in user_products)
