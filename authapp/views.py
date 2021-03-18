@@ -34,7 +34,6 @@ def logout(request):
     return HttpResponseRedirect(reverse('main'))
 
 
-@login_required
 def register(request):
     title = 'Регистрация'
 
@@ -49,6 +48,7 @@ def register(request):
     return render(request, 'authapp/register.html', content)
 
 
+@login_required
 def profile(request):
     title = 'Профиль'
     user = request.user
