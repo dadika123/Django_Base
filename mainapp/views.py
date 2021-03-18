@@ -13,7 +13,6 @@ def main(request):
 
 
 def products(request, pk=None):
-    print(pk)
     title = 'Товары'
     categories = ProductCategory.objects.all()
     products = Product.objects.all()

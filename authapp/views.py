@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 
@@ -33,6 +34,7 @@ def logout(request):
     return HttpResponseRedirect(reverse('main'))
 
 
+@login_required
 def register(request):
     title = 'Регистрация'
 
