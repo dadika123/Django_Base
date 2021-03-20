@@ -41,6 +41,11 @@ class ShopUserRegisterForm(UserCreationForm):
                 field.widget.attrs['class'] = 'form-control py-4'
             field.help_text = ''
 
+    def validate_age(self):
+        if self.fields['age'].widget.value < 16:
+            raise forms.ValidationError('Вы еще сдишком молоды!')
+        return self.fields['age'].widget.value
+
 
 class ShopUserProfileForm(UserChangeForm):
     avatar = forms.ImageField(widget=forms.FileInput())

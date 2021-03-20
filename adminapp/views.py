@@ -6,7 +6,7 @@ def index(request):
     return render(request, 'adminapp/admin.html')
 
 
-def admin_users_read(request):
+def admin_users(request):
     return render(request, 'adminapp/admin-users-read.html')
 
 
