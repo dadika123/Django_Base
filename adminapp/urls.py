@@ -7,7 +7,7 @@ app_name = 'adminapp'
 urlpatterns = [
     path('', index, name='index'),
     path('users-delete/<int:pk>/', admin_users_delete, name='admin_users_delete'),
-    path('users/', admin_users, name='admin_users'),
+    path('users/', index, name='index'),
     path('users-update/<int:pk>/', admin_users_update, name='admin_users_update'),
     path('users-create/', admin_users_create, name='admin_users_create'),
 ]
