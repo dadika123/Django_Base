@@ -17,7 +17,7 @@ class NewAdminRegisterForm(ShopUserRegisterForm):
 
 
 class NewAdminProfileForm(ShopUserProfileForm):
-
+    avatar = forms.ImageField(widget=forms.FileInput(), required=False)
     def __init__(self, *args, **kwargs):
         super(NewAdminProfileForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['readonly'] = False
