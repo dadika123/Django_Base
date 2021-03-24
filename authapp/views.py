@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 
@@ -47,6 +48,7 @@ def register(request):
     return render(request, 'authapp/register.html', content)
 
 
+@login_required
 def profile(request):
     title = 'Профиль'
     user = request.user
