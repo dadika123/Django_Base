@@ -23,8 +23,13 @@
                 <div class="col-lg-12">
                     <div class="custom-file">
                         {{ profile_form.avatar }}
-                        <label class="custom-file-label" for="{{ profile_form.avatar.id_for_label }}">Выберите
+                        <label class="custom-file-label" for="{{ profile_form.avatar.id_for_label }}">
+                        {% if user.avatar %}
+                            {{ media_url }}{{ user.avatar }}
+                        {% else %}
+                            Выберите
                             изображение</label>
+                        {% endif %}
                     </div>
                 </div>
             </div>
