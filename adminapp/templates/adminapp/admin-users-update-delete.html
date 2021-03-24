@@ -24,12 +24,12 @@
                     <div class="custom-file">
                         {{ profile_form.avatar }}
                         <label class="custom-file-label" for="{{ profile_form.avatar.id_for_label }}">
-                        {% if user.avatar %}
-                            {{ media_url }}{{ user.avatar }}
-                        {% else %}
-                            Выберите
-                            изображение</label>
-                        {% endif %}
+                            {% if user.avatar %}
+                                {{ media_url }}{{ user.avatar }}
+                            {% else %}
+                                Выберите
+                                изображение</label>
+                            {% endif %}
                     </div>
                 </div>
             </div>

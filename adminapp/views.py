@@ -1,10 +1,11 @@
+from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth.decorators import user_passes_test
-from geekshop.settings import MEDIA_URL
 
-from adminapp.forms import NewAdminRegisterForm, NewAdminProfileForm
+from adminapp.forms import NewAdminRegisterForm, NewAdminProfileForm, NewAdminProductCategoryForm
 from authapp.models import ShopUser
+from geekshop.settings import MEDIA_URL
+from mainapp.models import ProductCategory
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/')
@@ -57,3 +58,20 @@ def admin_users_delete(request, user_id):
         return HttpResponseRedirect(reverse('new_admin:admin_users'))
     else:
         return HttpResponseRedirect(reverse('new_admin:admin_users'))
+
+
+def admin_categories(request):
+    context = {'categories': ProductCategory.objects.all()}
+    return render(request, 'adminapp/categories_read.html', context)
+
+
+def admin_category_create(request):
+    if request.method == 'POST':
+        category_form = NewAdminProductCategoryForm(data=request.POST)
+        if category_form.is_valid():
+            category_form.save()
+            return HttpResponseRedirect(reverse('new_admin:admin_categories'))
+    else:
+        category_form = NewAdminProductCategoryForm()
+    context = {'category_form': category_form}
+    return render(request, 'adminapp/categories_create.html', context)

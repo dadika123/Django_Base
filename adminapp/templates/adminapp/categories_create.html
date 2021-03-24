@@ -1,0 +1,28 @@
+{% extends "adminapp/base.html" %}
+{% load staticfiles %}
+{% block content %}
+    <h1 class="mt-4">Создание пользователя</h1>
+    <form action="{% url 'new_admin:admin_category_create' %}" method="post">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="small mb-1" for="{{ category_form.first_name.id_for_label }}">Название
+                        Категории</label>
+                    {{ category_form.name }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="small mb-1" for="{{ category_form.last_name.id_for_label }}">Описание</label>
+                    {{ category_form.description }}
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-lg-12" style="margin-top: 33px;">
+                <input class="btn btn-info btn-block" type="submit" value="Сохранить">
+            </div>
+        </div>
+    </form>
+{% endblock content %}
