@@ -1,4 +1,5 @@
 from django.shortcuts import render
+
 from mainapp.models import Product, ProductCategory
 
 
@@ -6,15 +7,19 @@ from mainapp.models import Product, ProductCategory
 
 
 def main(request):
-    content = {
+    context = {
         'title': 'Главная'
     }
-    return render(request, 'mainapp/index.html', context=content)
+    return render(request, 'mainapp/index.html', context)
 
 
-def products(request, pk=None):
+def products(request, category_id=None):
     title = 'Товары'
     categories = ProductCategory.objects.all()
     products = Product.objects.all()
-    content = {'title': title, 'products': products, 'categories': categories}
-    return render(request, 'mainapp/products.html', content)
+    context = {'title': title, 'products': products, 'categories': categories}
+    if category_id:
+        context.update({'products': Product.objects.filter(category_id=category_id)})
+    else:
+        context.update({'products': Product.objects.all()})
+    return render(request, 'mainapp/products.html', context)
