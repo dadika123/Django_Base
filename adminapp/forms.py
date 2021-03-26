@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 
 from authapp.forms import ShopUserRegisterForm, ShopUserProfileForm
-from authapp.models import ShopUser
+from authapp.models import User
 from mainapp.models import ProductCategory
 
 
@@ -10,7 +10,7 @@ class NewAdminRegisterForm(ShopUserRegisterForm):
     avatar = forms.ImageField(widget=forms.FileInput(), required=False)
 
     class Meta:
-        model = ShopUser
+        model = User
         fields = ('username', 'email', 'avatar', 'first_name', 'last_name', 'age', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):

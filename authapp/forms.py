@@ -1,12 +1,12 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 
-from authapp.models import ShopUser
+from authapp.models import User
 
 
 class ShopUserLoginForm(AuthenticationForm):
     class Meta:
-        model = ShopUser
+        model = User
         fields = ('username', 'password')
 
     def __init__(self, *args, **kwargs):
@@ -19,7 +19,7 @@ class ShopUserLoginForm(AuthenticationForm):
 
 class ShopUserRegisterForm(UserCreationForm):
     class Meta:
-        model = ShopUser
+        model = User
         fields = ('username', 'first_name', 'last_name', 'age', 'email',
                   'avatar', 'password1', 'password2')
 
@@ -51,7 +51,7 @@ class ShopUserProfileForm(UserChangeForm):
     avatar = forms.ImageField(widget=forms.FileInput())
 
     class Meta:
-        model = ShopUser
+        model = User
         fields = ('username', 'first_name', 'last_name', 'age', 'email',
                   'avatar',)
 
