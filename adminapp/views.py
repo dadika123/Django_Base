@@ -1,13 +1,13 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, HttpResponseRedirect
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 
-from adminapp.forms import NewAdminRegisterForm, NewAdminProfileForm, NewAdminProductCategoryForm
+from adminapp.forms import NewAdminRegisterForm, NewAdminProfileForm
 from authapp.models import User
-from mainapp.models import ProductCategory
+from mainapp.models import Product
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/')
@@ -24,31 +24,11 @@ class UserListView(ListView):
         return super(UserListView, self).dispatch(request, *args, **kwargs)
 
 
-# @user_passes_test(lambda u: u.is_superuser, login_url='/')
-# def admin_users(request):
-#     context = {'users': ShopUser.objects.all()}
-#     return render(request, 'adminapp/admin-users-read.html', context)
-
-
 class UserCreateView(CreateView):
     model = User
     template_name = 'adminapp/admin-users-create.html'
     form_class = NewAdminRegisterForm
     success_url = reverse_lazy('new_admin:admin_users')
-
-
-# @user_passes_test(lambda u: u.is_superuser, login_url='/')
-# def admin_users_create(request):
-#     if request.method == 'POST':
-#         register_form = NewAdminRegisterForm(
-#             data=request.POST, files=request.FILES)
-#         if register_form.is_valid():
-#             register_form.save()
-#             return HttpResponseRedirect(reverse('new_admin:admin_users'))
-#     else:
-#         register_form = NewAdminRegisterForm()
-#     context = {'register_form': register_form}
-#     return render(request, 'adminapp/admin-users-create.html', context)
 
 
 class UserUpdateView(UpdateView):
@@ -63,23 +43,6 @@ class UserUpdateView(UpdateView):
         return context
 
 
-#
-# @user_passes_test(lambda u: u.is_superuser, login_url='/')
-# def admin_users_update(request, user_id):
-#     user = User.objects.get(id=user_id)
-#     if request.method == 'POST':
-#         profile_form = NewAdminProfileForm(
-#             data=request.POST, files=request.FILES, instance=user)
-#         if profile_form.is_valid():
-#             profile_form.save()
-#             return HttpResponseRedirect(reverse('new_admin:admin_users'))
-#     else:
-#         profile_form = NewAdminProfileForm(instance=user)
-#         context = {'profile_form': profile_form,
-#                    'user': user, 'media_url': MEDIA_URL}
-#         return render(request, 'adminapp/admin-users-update-delete.html', context)
-
-
 class UserDeleteView(DeleteView):
     model = User
     template_name = 'adminapp/admin-users-update-delete.html'
@@ -92,18 +55,17 @@ class UserDeleteView(DeleteView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-def admin_categories(request):
-    context = {'categories': ProductCategory.objects.all()}
-    return render(request, 'adminapp/categories_read.html', context)
+class ProductListView(ListView):
+    model = Product
 
 
-def admin_category_create(request):
-    if request.method == 'POST':
-        category_form = NewAdminProductCategoryForm(data=request.POST)
-        if category_form.is_valid():
-            category_form.save()
-            return HttpResponseRedirect(reverse('new_admin:admin_categories'))
-    else:
-        category_form = NewAdminProductCategoryForm()
-    context = {'category_form': category_form}
-    return render(request, 'adminapp/categories_create.html', context)
+class ProductCreateView(CreateView):
+    model = Product
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+
+
+class ProductDeleteView(DeleteView):
+    model = Product

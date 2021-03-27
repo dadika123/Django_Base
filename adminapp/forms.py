@@ -1,9 +1,7 @@
 from django import forms
-from django.forms import ModelForm
 
 from authapp.forms import ShopUserRegisterForm, ShopUserProfileForm
 from authapp.models import User
-from mainapp.models import ProductCategory
 
 
 class NewAdminRegisterForm(ShopUserRegisterForm):
@@ -25,15 +23,3 @@ class NewAdminProfileForm(ShopUserProfileForm):
         super(NewAdminProfileForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['readonly'] = False
         self.fields['email'].widget.attrs['readonly'] = False
-
-
-class NewAdminProductCategoryForm(ModelForm):
-    class Meta:
-        model = ProductCategory
-        fields = ('name', 'description',)
-
-    def __init__(self, *args, **kwargs):
-        super(ModelForm, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
-        self.fields['description'].widget.attrs['rows'] = 2
