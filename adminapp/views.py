@@ -57,7 +57,7 @@ class UserDeleteView(DeleteView):
 
 class ProductListView(ListView):
     model = Product
-
+    template_name = 'adminapp/admin-product-read.html'
 
 class ProductCreateView(CreateView):
     model = Product
