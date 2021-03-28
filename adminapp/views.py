@@ -5,9 +5,9 @@ from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 
-from adminapp.forms import NewAdminRegisterForm, NewAdminProfileForm
+from adminapp.forms import NewAdminRegisterForm, NewAdminProfileForm, ProductCreateForm
 from authapp.models import User
-from mainapp.models import Product
+from mainapp.models import Product, ProductCategory
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/')
@@ -59,8 +59,13 @@ class ProductListView(ListView):
     model = Product
     template_name = 'adminapp/admin-product-read.html'
 
+
 class ProductCreateView(CreateView):
     model = Product
+    template_name = 'adminapp/admin-product-create.html'
+    form_class = ProductCreateForm
+    success_url = reverse_lazy('new_admin:admin_products')
+
 
 
 class ProductUpdateView(UpdateView):
