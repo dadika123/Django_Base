@@ -9,5 +9,5 @@ urlpatterns = [
     path('logout/', logout, name='logout'),
     path('register/', register, name='register'),
     path('profile/', profile, name='profile'),
-    re_path(r'^verify/(?P<email>.+)/(?P<activation_key>\w+)/$', send_verify_mail, name='verify'),
+    path(r'^verify/(?P<email>.+)/(?P<activation_key>\w+)/$', send_verify_mail, name='verify'),
 ]

@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'authapp.context_processors.basket',
             ],
         },
     },
@@ -129,8 +130,9 @@ AUTH_USER_MODEL = "authapp.User"
 
 LOGIN_URL = '/auth/login/'
 
-DOMAIN_NAME = 'http://localhost:8000'
-EMAIL_HOST = 'localhost'
-EMAIL_HOST_USER = None
-EMAIL_HOST_PASSWORD = None
-EMAIL_PORT = '25'
+DOMAIN_NAME = 'https://mailtrap.io/'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = 'bee39a78e80e06'
+EMAIL_HOST_PASSWORD = '338d1eef69024c'
+EMAIL_PORT = '2525'

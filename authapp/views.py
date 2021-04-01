@@ -1,12 +1,11 @@
-from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
-
+from authapp.models import User
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserProfileForm
-from basketapp.models import Basket
 
 
 def login(request):
@@ -66,11 +65,9 @@ def profile(request):
             return HttpResponseRedirect(reverse('auth:profile'))
     else:
         profile_form = ShopUserProfileForm(instance=user)
-        basket = Basket.objects.filter(user=user)
         content = {
             'title': title,
             'profile_form': profile_form,
-            'basket': basket,
             'media_url': settings.MEDIA_URL}
         return render(request, 'authapp/profile.html', content)
 
@@ -84,3 +81,19 @@ def send_verify_mail(user):
 {settings.DOMAIN_NAME} перейдите по ссылке: \n{settings.DOMAIN_NAME}{verify_link}'
 
     return send_mail(title, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+
+
+def verify(request, email, activation_key):
+    try:
+        user = User.objects.get(email=email)
+        if user.activation_key == activation_key and not user.is_activation_key_expired():
+            user.is_active = True
+            user.save()
+            auth.login(request, user)
+            return render(request, 'authapp/verification.html')
+        else:
+            print(f'error activation user: {user}')
+            return render(request, 'authapp/verification.html')
+    except Exception as e:
+        print(f'error activation user : {e.args}')
+        return HttpResponseRedirect(reverse('main'))

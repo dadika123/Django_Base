@@ -1,6 +1,9 @@
+import hashlib
+import random
+
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
-import random, hashlib
+
 from authapp.models import User
 
 
@@ -48,6 +51,7 @@ class ShopUserRegisterForm(UserCreationForm):
         user.activation_key = hashlib.sha1((user.email + salt).encode('utf8')).hexdigest()
         user.save()
         return user
+
 
 class ShopUserProfileForm(UserChangeForm):
     avatar = forms.ImageField(widget=forms.FileInput())
