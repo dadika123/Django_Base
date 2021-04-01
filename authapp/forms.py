@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
-
+import random, hashlib
 from authapp.models import User
 
 
@@ -41,11 +41,13 @@ class ShopUserRegisterForm(UserCreationForm):
                 field.widget.attrs['class'] = 'form-control py-4'
             field.help_text = ''
 
-    def validate_age(self):
-        if self.fields['age'].widget.value < 16:
-            raise forms.ValidationError('Вы еще сдишком молоды!')
-        return self.fields['age'].widget.value
-
+    def save(self):
+        user = super(ShopUserRegisterForm, self).save()
+        user.is_active = False
+        salt = hashlib.sha1(str(random.random()).encode('utf8')).hexdigest()[:6]
+        user.activation_key = hashlib.sha1((user.email + salt).encode('utf8')).hexdigest()
+        user.save()
+        return user
 
 class ShopUserProfileForm(UserChangeForm):
     avatar = forms.ImageField(widget=forms.FileInput())

@@ -7,7 +7,7 @@ from django.views.generic.list import ListView
 
 from adminapp.forms import NewAdminRegisterForm, NewAdminProfileForm, ProductCreateForm
 from authapp.models import User
-from mainapp.models import Product, ProductCategory
+from mainapp.models import Product
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/')
@@ -23,12 +23,22 @@ class UserListView(ListView):
     def dispatch(self, request, *args, **kwargs):
         return super(UserListView, self).dispatch(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super(UserListView, self).get_context_data(**kwargs)
+        context['title'] = 'Список пользователей'
+        return context
+
 
 class UserCreateView(CreateView):
     model = User
     template_name = 'adminapp/admin-users-create.html'
     form_class = NewAdminRegisterForm
     success_url = reverse_lazy('new_admin:admin_users')
+
+    def get_context_data(self, **kwargs):
+        context = super(UserCreateView, self).get_context_data(**kwargs)
+        context['title'] = 'Создание пользователя'
+        return context
 
 
 class UserUpdateView(UpdateView):
@@ -65,7 +75,6 @@ class ProductCreateView(CreateView):
     template_name = 'adminapp/admin-product-create.html'
     form_class = ProductCreateForm
     success_url = reverse_lazy('new_admin:admin_products')
-
 
 
 class ProductUpdateView(UpdateView):
