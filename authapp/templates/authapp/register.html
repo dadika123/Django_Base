@@ -3,7 +3,12 @@
 {% block content %}
     <div class="col-lg-7">
         <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 50px;">
-            <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+            <strong>Registration Error</strong>
+            {% for fields in register_form %}
+                {% if fields.errors %}
+                    {{ fields.errors }}
+                {% endif %}
+            {% endfor %}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

@@ -130,7 +130,7 @@ AUTH_USER_MODEL = "authapp.User"
 
 LOGIN_URL = '/auth/login/'
 
-DOMAIN_NAME = 'https://mailtrap.io/'
+DOMAIN_NAME = '127.0.0.1:8000'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.mailtrap.io'
 EMAIL_HOST_USER = 'bee39a78e80e06'
