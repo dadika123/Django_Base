@@ -1,47 +1,85 @@
+from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.list import ListView
 
-from adminapp.forms import NewAdminRegisterForm, NewAdminProfileForm
-from authapp.models import ShopUser
-from geekshop.settings import MEDIA_URL
+from adminapp.forms import NewAdminRegisterForm, NewAdminProfileForm, ProductCreateForm
+from authapp.models import User
+from mainapp.models import Product
 
 
-# Create your views here.
+@user_passes_test(lambda u: u.is_superuser, login_url='/')
 def index(request):
     return render(request, 'adminapp/admin.html')
 
 
-def admin_users(request):
-    context = {'users': ShopUser.objects.all()}
-    return render(request, 'adminapp/admin-users-read.html', context)
+class UserListView(ListView):
+    model = User
+    template_name = 'adminapp/admin-users-read.html'
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser, login_url='/'))
+    def dispatch(self, request, *args, **kwargs):
+        return super(UserListView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(UserListView, self).get_context_data(**kwargs)
+        context['title'] = 'Список пользователей'
+        return context
 
 
-def admin_users_create(request):
-    if request.method == 'POST':
-        register_form = NewAdminRegisterForm(data=request.POST, files=request.FILES)
-        if register_form.is_valid():
-            register_form.save()
-            return HttpResponseRedirect(reverse('new_admin:admin_users'))
-    else:
-        register_form = NewAdminRegisterForm()
-    context = {'register_form': register_form}
-    return render(request, 'adminapp/admin-users-create.html', context)
+class UserCreateView(CreateView):
+    model = User
+    template_name = 'adminapp/admin-users-create.html'
+    form_class = NewAdminRegisterForm
+    success_url = reverse_lazy('new_admin:admin_users')
+
+    def get_context_data(self, **kwargs):
+        context = super(UserCreateView, self).get_context_data(**kwargs)
+        context['title'] = 'Создание пользователя'
+        return context
 
 
-def admin_users_update(request, user_id):
-    user = ShopUser.objects.get(id=user_id)
-    if request.method == 'POST':
-        profile_form = NewAdminProfileForm(data=request.POST, files=request.FILES, instance=user)
-        if profile_form.is_valid():
-            profile_form.save()
-            return HttpResponseRedirect(reverse('new_admin:admin_users'))
-        else:
-            profile_form = NewAdminProfileForm(instance=user)
-            context = {'profile_form': profile_form,
-                       'user': user,
-                       'media_url': MEDIA_URL}
-            return render(request, 'adminapp/admin-users-update-delete.html', context)
+class UserUpdateView(UpdateView):
+    model = User
+    template_name = 'adminapp/admin-users-update-delete.html'
+    form_class = NewAdminProfileForm
+    success_url = reverse_lazy('new_admin:admin_users')
+
+    def get_context_data(self, **kwargs):
+        context = super(UserUpdateView, self).get_context_data(**kwargs)
+        context['title'] = 'Редактирование пользователя'
+        return context
 
 
-def admin_users_delete(request):
-    pass
+class UserDeleteView(DeleteView):
+    model = User
+    template_name = 'adminapp/admin-users-update-delete.html'
+    success_url = reverse_lazy('new_admin:admin_users')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.is_active = False
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class ProductListView(ListView):
+    model = Product
+    template_name = 'adminapp/admin-product-read.html'
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    template_name = 'adminapp/admin-product-create.html'
+    form_class = ProductCreateForm
+    success_url = reverse_lazy('new_admin:admin_products')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+
+
+class ProductDeleteView(DeleteView):
+    model = Product

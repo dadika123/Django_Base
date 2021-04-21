@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'authapp.context_processors.basket',
             ],
         },
     },
@@ -125,6 +126,13 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-AUTH_USER_MODEL = "authapp.ShopUser"
+AUTH_USER_MODEL = "authapp.User"
 
 LOGIN_URL = '/auth/login/'
+
+DOMAIN_NAME = '127.0.0.1:8000'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = 'bee39a78e80e06'
+EMAIL_HOST_PASSWORD = '338d1eef69024c'
+EMAIL_PORT = '2525'

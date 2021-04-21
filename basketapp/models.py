@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 
-from authapp.models import ShopUser
+from authapp.models import User
 from mainapp.models import Product
 
 
@@ -9,7 +9,7 @@ from mainapp.models import Product
 
 
 class Basket(models.Model):
-    user = models.ForeignKey(ShopUser, on_delete=CASCADE)
+    user = models.ForeignKey(User, on_delete=CASCADE)
     product = models.ForeignKey(Product, on_delete=CASCADE)
     quantity = models.PositiveIntegerField(default=0)
     created_timestamp = models.DateTimeField(auto_now_add=True)

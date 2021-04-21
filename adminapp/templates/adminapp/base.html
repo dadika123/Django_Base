@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <title>GeekShop - Admin</title>
+    <title>{{ title|title }}</title>
     <link href="{% static 'css/auth-admin.css' %}" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"
           crossorigin="anonymous"/>
@@ -46,7 +46,7 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Приложения</div>
-                    <a class="nav-link" href= {% url 'adminapp:admin_users' %} >
+                    <a class="nav-link" href="{% url 'new_admin:admin_users' %}">
                         <div class="sb-nav-link-icon">
                             <i class="fas fa-users"></i>
                         </div>
@@ -58,7 +58,7 @@
                         </div>
                         Категории
                     </a>
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{% url 'new_admin:admin_products' %}">
                         <div class="sb-nav-link-icon">
                             <i class="fas fa-tshirt"></i>
                         </div>
